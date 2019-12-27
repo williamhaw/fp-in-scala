@@ -38,4 +38,9 @@ class Chapter4Spec extends FunSuite with Matchers {
     Some("not hey").filter(_ == "hey") shouldEqual None
     None.filter(_ == "hey") shouldEqual None
   }
+
+  test("variance"){
+    variance(Seq()) shouldEqual None
+    variance(Seq(0.0, 0.0, 1.0, 1.0)) shouldEqual Some(0.25)
+  }
 }
