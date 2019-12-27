@@ -87,4 +87,8 @@ class Chapter3Spec extends FunSuite with Matchers{
   test("filter using flatmap"){
     filterUsingFlatmap(List(1, 2, 3, 4))(x => x % 2 == 0) shouldBe List(2, 4)
   }
+
+  test("addCorresponding"){
+    addCorresponding(List(1, 2, 3), List(4, 5, 6)) shouldBe List(5, 7, 9)
+  }
 }

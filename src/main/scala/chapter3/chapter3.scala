@@ -72,4 +72,10 @@ package object chapter3 {
   def flatMap[A,B](as: List[A])(f: A => List[B]): List[B] = concat(map(as)(f))
 
   def filterUsingFlatmap[A](as: List[A])(f: A => Boolean): List[A] = flatMap(as)( x => if(f(x)) List(x) else List())
+
+  def addCorresponding(a: List[Int], b: List[Int]): List[Int] = (a, b) match {
+    case (Nil, _) => Nil
+    case (_, Nil) => Nil
+    case (h1 :: t1, h2 :: t2) => h1 + h2 :: addCorresponding(t1, t2)
+  }
 }
