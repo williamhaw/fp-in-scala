@@ -78,4 +78,10 @@ package object chapter3 {
     case (_, Nil) => Nil
     case (h1 :: t1, h2 :: t2) => h1 + h2 :: addCorresponding(t1, t2)
   }
+
+  def zipWith[A, B, C](a: List[A], b: List[B])(f: (A, B) => C): List[C] = (a, b) match {
+    case (Nil, _) => Nil
+    case (_, Nil) => Nil
+    case (h1 :: t1, h2 :: t2) => f(h1,h2) :: zipWith(t1, t2)(f)
+  }
 }
