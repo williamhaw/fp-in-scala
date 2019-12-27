@@ -60,4 +60,6 @@ package object chapter3 {
   def append[A](l: List[A], r: List[A]): List[A] = foldRight(l, r)(_ :: _)
 
   def concat[A](l: List[List[A]]): List[A] = foldRight(l, List[A]())(append)
+
+  def add1(l: List[Int]): List[Int] = l.map(_ + 1)
 }

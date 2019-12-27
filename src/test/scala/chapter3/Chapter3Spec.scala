@@ -62,4 +62,8 @@ class Chapter3Spec extends FunSuite with Matchers{
     concat(List(List(1, 2, 3), Nil, List(4, 5, 6))) shouldBe List(1, 2, 3, 4, 5, 6)
     concat(List(Nil, Nil, Nil)) shouldBe Nil
   }
+
+  test("test adding 1 to each element of list"){
+    add1(List(1, 2, 3)) shouldBe List(2, 3, 4)
+  }
 }
