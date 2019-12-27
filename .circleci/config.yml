@@ -37,6 +37,7 @@ jobs:
           paths:
             - ~/.ivy2/cache
             - ~/.sbt
+            - lib_managed
             - ~/.m2
           key: v1-dependencies--{{ checksum "build.sbt" }}-{{ checksum "project/Dependencies.scala" }}
 
