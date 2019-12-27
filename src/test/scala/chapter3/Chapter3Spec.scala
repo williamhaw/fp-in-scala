@@ -123,4 +123,9 @@ class Chapter3Spec extends FunSuite with Matchers{
     depth(Branch(Leaf(1), Leaf(2))) shouldBe 2
     depth(Leaf(1)) shouldBe 1
   }
+
+  test("treeMap"){
+    treeMap(Branch(Leaf(1), Branch(Leaf(2), Leaf(3))))(_ + 1) shouldBe Branch(Leaf(2), Branch(Leaf(3), Leaf(4)))
+    treeMap(Branch(Leaf(1), Branch(Leaf(2), Leaf(3))))(_.toString) shouldBe Branch(Leaf("1"), Branch(Leaf("2"), Leaf("3")))
+  }
 }

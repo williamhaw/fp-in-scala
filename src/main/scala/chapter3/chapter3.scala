@@ -113,4 +113,9 @@ package object chapter3 {
     case Leaf(_) => 1
     case Branch(l, r) => max(depth(l) + 1, depth(r) + 1)
   }
+
+  def treeMap[A, B](tree: Tree[A])(f: A => B): Tree[B] = tree match {
+    case Leaf(v) => Leaf(f(v))
+    case Branch(l, r) => Branch(treeMap(l)(f), treeMap(r)(f))
+  }
 }
