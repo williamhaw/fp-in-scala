@@ -118,4 +118,12 @@ package object chapter3 {
     case Leaf(v) => Leaf(f(v))
     case Branch(l, r) => Branch(treeMap(l)(f), treeMap(r)(f))
   }
+
+  def treeFold[A, B](tree: Tree[A])(f: A => B)(g: (B, B) => B): B = tree match {
+    case Leaf(v) => f(v)
+    case Branch(l, r) => g(treeFold(l)(f)(g), treeFold(r)(f)(g))
+  }
+
+  def treeMapUsingFold[A, B](tree: Tree[A])(f: A => B): Tree[B] =
+    treeFold(tree)(v => Leaf(f(v)): Tree[B])(Branch(_, _))
 }

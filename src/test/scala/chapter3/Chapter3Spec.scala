@@ -1,6 +1,7 @@
 package chapter3
 
 import org.scalatest.{FunSuite, Matchers}
+import scala.math.max
 
 class Chapter3Spec extends FunSuite with Matchers{
 
@@ -127,5 +128,19 @@ class Chapter3Spec extends FunSuite with Matchers{
   test("treeMap"){
     treeMap(Branch(Leaf(1), Branch(Leaf(2), Leaf(3))))(_ + 1) shouldBe Branch(Leaf(2), Branch(Leaf(3), Leaf(4)))
     treeMap(Branch(Leaf(1), Branch(Leaf(2), Leaf(3))))(_.toString) shouldBe Branch(Leaf("1"), Branch(Leaf("2"), Leaf("3")))
+  }
+
+  test("treeFold"){
+    //size
+    treeFold(Branch(Leaf(1), Branch(Leaf(2), Leaf(3))))(_ => 1)(_ + _ + 1) shouldBe 5
+    //max
+    treeFold(Branch(Leaf(1), Branch(Leaf(2), Leaf(3))))(a => a)(max) shouldBe 3
+    //max depth
+    treeFold(Branch(Leaf(1), Branch(Leaf(2), Leaf(3))))(_ => 1)((d1, d2) => 1 + max(d1, d2)) shouldBe 3
+    treeFold(Branch(Leaf(1), Leaf(2)))(_ => 1)((d1, d2) => 1 + max(d1, d2)) shouldBe 2
+    treeFold(Leaf(1))(_ => 1)((d1, d2) => 1 + max(d1, d2)) shouldBe 1
+    //map
+    treeMapUsingFold(Branch(Leaf(1), Branch(Leaf(2), Leaf(3))))(_ + 1) shouldBe Branch(Leaf(2), Branch(Leaf(3), Leaf(4)))
+    treeMapUsingFold(Branch(Leaf(1), Branch(Leaf(2), Leaf(3))))(_.toString) shouldBe Branch(Leaf("1"), Branch(Leaf("2"), Leaf("3")))
   }
 }
