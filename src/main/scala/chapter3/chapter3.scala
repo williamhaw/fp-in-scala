@@ -108,4 +108,9 @@ package object chapter3 {
     case Leaf(v) => v
     case Branch(l, r) => max(maxOfTree(l), maxOfTree(r))
   }
+
+  def depth[A](tree: Tree[A]): Int = tree match {
+    case Leaf(_) => 1
+    case Branch(l, r) => max(depth(l) + 1, depth(r) + 1)
+  }
 }

@@ -117,4 +117,10 @@ class Chapter3Spec extends FunSuite with Matchers{
   test("max of tree"){
     maxOfTree(Branch(Leaf(1), Branch(Leaf(2), Leaf(3)))) shouldBe 3
   }
+
+  test("max depth of tree"){
+    depth(Branch(Leaf(1), Branch(Leaf(2), Leaf(3)))) shouldBe 3
+    depth(Branch(Leaf(1), Leaf(2))) shouldBe 2
+    depth(Leaf(1)) shouldBe 1
+  }
 }
