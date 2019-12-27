@@ -95,4 +95,17 @@ class Chapter3Spec extends FunSuite with Matchers{
   test("zipWith"){
     zipWith(List("a", "b", "c"), List("a", "b"))((a, b) => a + b) shouldBe List("aa", "bb")
   }
+
+  test("hasSubsequence success"){
+    hasSubsequence(List(1, 2, 3), List(1)) shouldBe true
+    hasSubsequence(List(1, 2, 3), List(1, 2)) shouldBe true
+    hasSubsequence(List(1, 2, 3), List(1, 2, 3)) shouldBe true
+    hasSubsequence(List(1, 2, 3), List(2, 3)) shouldBe true
+    hasSubsequence(List(1, 2, 3), List(3)) shouldBe true
+  }
+
+  test("hasSubsequence failure"){
+    hasSubsequence(List(1, 2, 3), List(5)) shouldBe false
+    hasSubsequence(List(1, 2, 3), List(1, 2, 3, 4)) shouldBe false
+  }
 }

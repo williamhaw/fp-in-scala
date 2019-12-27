@@ -84,4 +84,12 @@ package object chapter3 {
     case (_, Nil) => Nil
     case (h1 :: t1, h2 :: t2) => f(h1,h2) :: zipWith(t1, t2)(f)
   }
+
+  @scala.annotation.tailrec
+  def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = (sup, sub) match {
+    case (Nil, Nil) => true
+    case (Nil, _) => false
+    case (_, Nil) => true
+    case (h1 :: t1, h2 :: t2) => if(h1 == h2) hasSubsequence(t1, t2) else hasSubsequence(t1, sub)
+  }
 }
