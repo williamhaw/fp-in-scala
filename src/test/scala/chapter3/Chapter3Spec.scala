@@ -75,4 +75,12 @@ class Chapter3Spec extends FunSuite with Matchers{
     map(List(1, 2, 3))(x => x + 1) shouldBe List(2, 3, 4)
     map(List(1.0, 2.0, 3.0))(x => x.toString) shouldBe List("1.0", "2.0", "3.0")
   }
+
+  test("filter odd numbers out"){
+    filter(List(1, 2, 3, 4))(x => x % 2 == 0) shouldBe List(2, 4)
+  }
+
+  test("flatmap"){
+    flatMap(List(1, 2, 3))(x => List(x, x)) shouldBe List(1, 1, 2, 2, 3, 3)
+  }
 }
