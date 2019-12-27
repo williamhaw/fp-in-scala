@@ -65,5 +65,5 @@ package object chapter3 {
 
   def doubleListToString(l: List[Double]): List[String] = foldRight(l, Nil: List[String])((h, t) => h.toString :: t)
 
-  def map[A,B](as: List[A])(f: A => B): List[B] = ???
+  def map[A,B](as: List[A])(f: A => B): List[B] = foldRight(as, Nil: List[B])((h, t) => f(h) :: t)
 }

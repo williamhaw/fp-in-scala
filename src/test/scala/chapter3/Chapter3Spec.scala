@@ -70,4 +70,9 @@ class Chapter3Spec extends FunSuite with Matchers{
   test("test transforming List[Double] to List[String]"){
     doubleListToString(List(1.0, 2.0, 3.0)) shouldBe List("1.0", "2.0", "3.0")
   }
+
+  test("test map for addition and toString"){
+    map(List(1, 2, 3))(x => x + 1) shouldBe List(2, 3, 4)
+    map(List(1.0, 2.0, 3.0))(x => x.toString) shouldBe List("1.0", "2.0", "3.0")
+  }
 }
