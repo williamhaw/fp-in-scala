@@ -92,4 +92,13 @@ package object chapter3 {
     case (_, Nil) => true
     case (h1 :: t1, h2 :: t2) => if(h1 == h2) hasSubsequence(t1, t2) else hasSubsequence(t1, sub)
   }
+
+  sealed trait Tree[+A]
+  case class Leaf[A](value: A) extends Tree[A]
+  case class Branch[A](left: Tree[A], right: Tree[A]) extends Tree[A]
+
+  def sizeOfTree[A](tree: Tree[A]): Int = tree match {
+    case Leaf(_) => 1
+    case Branch(l, r) => sizeOfTree(l) + sizeOfTree(r) + 1
+  }
 }

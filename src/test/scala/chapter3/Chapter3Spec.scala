@@ -108,4 +108,9 @@ class Chapter3Spec extends FunSuite with Matchers{
     hasSubsequence(List(1, 2, 3), List(5)) shouldBe false
     hasSubsequence(List(1, 2, 3), List(1, 2, 3, 4)) shouldBe false
   }
+
+  test("size of tree"){
+    sizeOfTree[Int](Branch(Leaf(1), Leaf(2))) shouldBe 3
+    sizeOfTree[Int](Branch(Leaf(1), Branch(Leaf(2), Leaf(3)))) shouldBe 5
+  }
 }
