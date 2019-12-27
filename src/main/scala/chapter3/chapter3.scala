@@ -70,4 +70,6 @@ package object chapter3 {
   def filter[A](as: List[A])(f: A => Boolean): List[A] = foldRight(as, Nil: List[A])((h, t) => if(f(h)) h :: t else t)
 
   def flatMap[A,B](as: List[A])(f: A => List[B]): List[B] = concat(map(as)(f))
+
+  def filterUsingFlatmap[A](as: List[A])(f: A => Boolean): List[A] = flatMap(as)( x => if(f(x)) List(x) else List())
 }
