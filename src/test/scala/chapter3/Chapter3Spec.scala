@@ -66,4 +66,8 @@ class Chapter3Spec extends FunSuite with Matchers{
   test("test adding 1 to each element of list"){
     add1(List(1, 2, 3)) shouldBe List(2, 3, 4)
   }
+
+  test("test transforming List[Double] to List[String]"){
+    doubleListToString(List(1.0, 2.0, 3.0)) shouldBe List("1.0", "2.0", "3.0")
+  }
 }
