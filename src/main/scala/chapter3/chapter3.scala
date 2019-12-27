@@ -61,7 +61,9 @@ package object chapter3 {
 
   def concat[A](l: List[List[A]]): List[A] = foldRight(l, List[A]())(append)
 
-  def add1(l: List[Int]): List[Int] = l.map(_ + 1)
+  def add1(l: List[Int]): List[Int] = foldRight(l, Nil: List[Int])((h, t) => h + 1 :: t)
 
-  def doubleListToString(l: List[Double]): List[String] = l.map(_.toString)
+  def doubleListToString(l: List[Double]): List[String] = foldRight(l, Nil: List[String])((h, t) => h.toString :: t)
+
+  def map[A,B](as: List[A])(f: A => B): List[B] = ???
 }
