@@ -93,6 +93,6 @@ class Chapter3Spec extends FunSuite with Matchers{
   }
 
   test("zipWith"){
-    zipWith(List("a", "b", "c"), List("a", "b"))((a, b) => a.toString + b.toString) shouldBe List("aa", "bb")
+    zipWith(List("a", "b", "c"), List("a", "b"))((a, b) => a + b) shouldBe List("aa", "bb")
   }
 }
