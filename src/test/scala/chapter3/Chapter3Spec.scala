@@ -113,4 +113,8 @@ class Chapter3Spec extends FunSuite with Matchers{
     sizeOfTree[Int](Branch(Leaf(1), Leaf(2))) shouldBe 3
     sizeOfTree[Int](Branch(Leaf(1), Branch(Leaf(2), Leaf(3)))) shouldBe 5
   }
+
+  test("max of tree"){
+    maxOfTree(Branch(Leaf(1), Branch(Leaf(2), Leaf(3)))) shouldBe 3
+  }
 }

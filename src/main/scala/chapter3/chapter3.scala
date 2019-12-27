@@ -1,3 +1,5 @@
+import scala.math.max
+
 package object chapter3 {
 
   def tail[T](list: List[T]): List[T] = list match {
@@ -100,5 +102,10 @@ package object chapter3 {
   def sizeOfTree[A](tree: Tree[A]): Int = tree match {
     case Leaf(_) => 1
     case Branch(l, r) => sizeOfTree(l) + sizeOfTree(r) + 1
+  }
+
+  def maxOfTree(tree: Tree[Int]): Int = tree match {
+    case Leaf(v) => v
+    case Branch(l, r) => max(maxOfTree(l), maxOfTree(r))
   }
 }
