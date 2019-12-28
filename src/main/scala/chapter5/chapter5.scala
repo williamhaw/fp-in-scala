@@ -19,6 +19,12 @@ package object chapter5 {
       case Cons(_, _) if n <= 0 => this
       case _ => empty
     }
+
+    def takeWhile(p: A => Boolean): Stream[A] = this match {
+      case Cons(h, t) if(p(h())) => cons[A](h(), t().takeWhile(p))
+      case Cons(_, t) => t().takeWhile(p)
+      case _ => empty
+    }
   }
 
   case object Empty extends Stream[Nothing]

@@ -19,4 +19,10 @@ class Chapter5Spec extends FunSuite with Matchers {
     Stream(1, 2, 3, 4).drop(2).toList shouldEqual List(3, 4)
     Stream(1, 2, 3, 4).drop(10).toList shouldEqual List.empty
   }
+
+  test("Stream takeWhile") {
+    Stream(1, 2, 3, 4, 5).takeWhile(_ % 2 == 0).toList shouldEqual List(2, 4)
+    Stream(1, 3, 5).takeWhile(_ % 2 == 0).toList shouldEqual List.empty
+    Stream[Int]().takeWhile(_ % 2 == 0).toList shouldEqual List.empty
+  }
 }
