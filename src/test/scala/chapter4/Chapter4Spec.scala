@@ -71,5 +71,33 @@ class Chapter4Spec extends FunSuite with Matchers {
     sequence2(List(None)) shouldEqual None
   }
 
+  test("Either map") {
+    val error: Either[String, Int] = Left("error")
+    val success: Either[String, Int] = Right(2)
+    error.map(_ + 1) shouldEqual Left("error")
+    success.map(_ + 1) shouldEqual Right(3)
+  }
 
+  test("Either flatMap") {
+    val error: Either[String, Int] = Left("error")
+    val success1: Either[String, Int] = Right(1)
+    val success2: Either[String, Int] = Right(2)
+    error.flatMap { case 1 => Left("My god! A 1!") case v => Right(v + 1) } shouldEqual Left("error")
+    success1.flatMap { case 1 => Left("My god! A 1!") case v => Right(v + 1) } shouldEqual Left("My god! A 1!")
+    success2.flatMap { case 1 => Left("My god! A 1!") case v => Right(v + 1) } shouldEqual Right(3)
+  }
+
+  test("Either orElse") {
+    val error: Either[String, Int] = Left("error")
+    val success: Either[String, Int] = Right(1)
+    error.orElse(Right(2)) shouldEqual Right(2)
+    success.orElse(Right(2)) shouldEqual Right(1)
+  }
+
+  test("Either map2") {
+    val error: Either[String, Int] = Left("error")
+    val success: Either[String, Int] = Right(1)
+    error.map2(success)(_ + _) shouldEqual Left("error")
+    success.map2(success)(_ + _) shouldEqual Right(2)
+  }
 }
