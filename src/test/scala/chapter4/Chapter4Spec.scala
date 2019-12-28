@@ -43,4 +43,11 @@ class Chapter4Spec extends FunSuite with Matchers {
     variance(Seq()) shouldEqual None
     variance(Seq(0.0, 0.0, 1.0, 1.0)) shouldEqual Some(0.25)
   }
+
+  test("map2"){
+    map2(Some(2), Some(3))(_ + _) shouldEqual Some(5)
+    map2(Some(2), None)(_ + _) shouldEqual None
+    map2(None: Option[Int], Some(2))(_ + _) shouldEqual None
+    map2(None: Option[Int], None)(_ + _) shouldEqual None
+  }
 }

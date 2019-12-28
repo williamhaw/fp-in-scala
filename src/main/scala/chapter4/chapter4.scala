@@ -25,4 +25,6 @@ package object chapter4 {
     def mean(l: Seq[Double]): Option[Double] = if(l.isEmpty) None else Some(l.sum / l.length)
     mean(xs).flatMap(m => mean(xs.map(x => math.pow(x - m, 2))))
   }
+
+  def map2[A,B,C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] = a.flatMap(aRaw => b.map(bRaw => f(aRaw, bRaw)))
 }
