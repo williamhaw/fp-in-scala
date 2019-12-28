@@ -1,7 +1,7 @@
 package chapter4
 
-import org.scalatest.{FunSuite, Matchers}
 import chapter4._
+import org.scalatest.{FunSuite, Matchers}
 
 class Chapter4Spec extends FunSuite with Matchers {
   test("map") {
@@ -57,5 +57,18 @@ class Chapter4Spec extends FunSuite with Matchers {
     sequence(List(Some(1), None)) shouldEqual None
     sequence(List(None, Some(1))) shouldEqual None
     sequence(List(None)) shouldEqual None
+  }
+
+  test("traverse"){
+   traverse(List("1", "2", "3"))(i => if(i == "1" || i == "2" || i == "3") Some(i.toInt) else None) shouldEqual Some(List(1, 2, 3))
+   traverse(List("1", "2", "3"))(i => if(i == "1") Some(i.toInt) else None) shouldEqual None
+  }
+
+  test("sequence2"){
+    sequence2(List(Some(1), Some(2), Some(3))) shouldEqual Some(List(1, 2, 3))
+    sequence2(List()) shouldEqual Some(List())
+    sequence2(List(Some(1), None)) shouldEqual None
+    sequence2(List(None, Some(1))) shouldEqual None
+    sequence2(List(None)) shouldEqual None
   }
 }

@@ -32,4 +32,11 @@ package object chapter4 {
     case Nil => Some(Nil)
     case h :: t => h.flatMap(hRaw => sequence(t).map(rawList => hRaw :: rawList))
   }
+
+  def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] = a match {
+    case Nil => Some(Nil)
+    case h :: t => map2(f(h), traverse(t)(f))(_ :: _)
+  }
+
+  def sequence2[A](a: List[Option[A]]): Option[List[A]] = traverse(a)(x => x)
 }
