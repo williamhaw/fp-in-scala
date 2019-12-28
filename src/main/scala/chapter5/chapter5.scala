@@ -1,9 +1,23 @@
+import chapter5.Stream._
+
 package object chapter5 {
 
   sealed trait Stream[+A] {
     def toList: List[A] = this match {
       case Cons(h, t) => h() :: t().toList
       case Empty => List()
+    }
+
+    def take(n: Int): Stream[A] = this match {
+      case Cons(h, t) if n > 0 => cons[A](h(), t().take(n - 1))
+      case Cons(_, _) if n <= 0 => empty
+      case _ => empty
+    }
+
+    def drop(n: Int): Stream[A] = this match {
+      case Cons(_, t) if n > 0 => t().drop(n - 1)
+      case Cons(_, _) if n <= 0 => this
+      case _ => empty
     }
   }
 
