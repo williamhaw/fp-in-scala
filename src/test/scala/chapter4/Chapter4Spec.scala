@@ -39,19 +39,19 @@ class Chapter4Spec extends FunSuite with Matchers {
     None.filter(_ == "hey") shouldEqual None
   }
 
-  test("variance"){
+  test("variance") {
     variance(Seq()) shouldEqual None
     variance(Seq(0.0, 0.0, 1.0, 1.0)) shouldEqual Some(0.25)
   }
 
-  test("map2"){
+  test("map2") {
     map2(Some(2), Some(3))(_ + _) shouldEqual Some(5)
     map2(Some(2), None)(_ + _) shouldEqual None
     map2(None: Option[Int], Some(2))(_ + _) shouldEqual None
     map2(None: Option[Int], None)(_ + _) shouldEqual None
   }
 
-  test("sequence"){
+  test("sequence") {
     sequence(List(Some(1), Some(2), Some(3))) shouldEqual Some(List(1, 2, 3))
     sequence(List()) shouldEqual Some(List())
     sequence(List(Some(1), None)) shouldEqual None
@@ -59,12 +59,12 @@ class Chapter4Spec extends FunSuite with Matchers {
     sequence(List(None)) shouldEqual None
   }
 
-  test("traverse"){
-   traverse(List("1", "2", "3"))(i => if(i == "1" || i == "2" || i == "3") Some(i.toInt) else None) shouldEqual Some(List(1, 2, 3))
-   traverse(List("1", "2", "3"))(i => if(i == "1") Some(i.toInt) else None) shouldEqual None
+  test("traverse") {
+    traverse(List("1", "2", "3"))(i => if (i == "1" || i == "2" || i == "3") Some(i.toInt) else None) shouldEqual Some(List(1, 2, 3))
+    traverse(List("1", "2", "3"))(i => if (i == "1") Some(i.toInt) else None) shouldEqual None
   }
 
-  test("sequence2"){
+  test("sequence2") {
     sequence2(List(Some(1), Some(2), Some(3))) shouldEqual Some(List(1, 2, 3))
     sequence2(List()) shouldEqual Some(List())
     sequence2(List(Some(1), None)) shouldEqual None
