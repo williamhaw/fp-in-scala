@@ -27,4 +27,9 @@ package object chapter4 {
   }
 
   def map2[A,B,C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] = a.flatMap(aRaw => b.map(bRaw => f(aRaw, bRaw)))
+
+  def sequence[A](a: List[Option[A]]): Option[List[A]] = a match {
+    case Nil => Some(Nil)
+    case h :: t => h.flatMap(hRaw => sequence(t).map(rawList => hRaw :: rawList))
+  }
 }

@@ -50,4 +50,12 @@ class Chapter4Spec extends FunSuite with Matchers {
     map2(None: Option[Int], Some(2))(_ + _) shouldEqual None
     map2(None: Option[Int], None)(_ + _) shouldEqual None
   }
+
+  test("sequence"){
+    sequence(List(Some(1), Some(2), Some(3))) shouldEqual Some(List(1, 2, 3))
+    sequence(List()) shouldEqual Some(List())
+    sequence(List(Some(1), None)) shouldEqual None
+    sequence(List(None, Some(1))) shouldEqual None
+    sequence(List(None)) shouldEqual None
+  }
 }
