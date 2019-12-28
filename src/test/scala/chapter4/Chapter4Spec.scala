@@ -2,6 +2,8 @@ package chapter4
 
 import org.scalatest.{FunSuite, Matchers}
 
+import scala.util.{Failure, Success, Try}
+
 class Chapter4Spec extends FunSuite with Matchers {
   test("Option map") {
     Some("hey").map(_ + " world") shouldEqual Some("hey world")
@@ -99,5 +101,29 @@ class Chapter4Spec extends FunSuite with Matchers {
     val success: Either[String, Int] = Right(1)
     error.map2(success)(_ + _) shouldEqual Left("error")
     success.map2(success)(_ + _) shouldEqual Right(2)
+  }
+
+  test("Either traverse") {
+    traverseEither(List("1", "error1", "error2"))(v => Try {
+      v.toInt
+    } match {
+      case Success(v) => Right(v)
+      case Failure(e) => Left(e.getMessage)
+    }) shouldEqual Left("For input string: \"error1\"")
+
+    traverseEither(List("1", "2", "3"))(v => Try {
+      v.toInt
+    } match {
+      case Success(v) => Right(v)
+      case Failure(e) => Left(e.getMessage)
+    }) shouldEqual Right(List(1, 2, 3))
+  }
+
+  test("Either sequence") {
+    val error1: Either[String, Int] = Left("error1")
+    val error2: Either[String, Int] = Left("error2")
+    val success: Either[String, Int] = Right(1)
+    sequenceEither(List(error1, success, error2)) shouldEqual Left("error1")
+    sequenceEither(List(success, success, success)) shouldEqual Right(List(1, 1, 1))
   }
 }

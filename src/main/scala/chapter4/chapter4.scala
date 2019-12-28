@@ -73,4 +73,10 @@ package object chapter4 {
 
   case class Right[+A](value: A) extends Either[Nothing, A]
 
+  def sequenceEither[E, A](es: List[Either[E, A]]): Either[E, List[A]] = traverseEither(es)(x => x)
+
+  def traverseEither[E, A, B](as: List[A])(f: A => Either[E, B]): Either[E, List[B]] = as match {
+    case Nil => Right(Nil)
+    case h :: t => f(h).map2(traverseEither(t)(f))(_ :: _)
+  }
 }
