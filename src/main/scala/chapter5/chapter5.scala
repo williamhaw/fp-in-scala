@@ -89,7 +89,7 @@ package object chapter5 {
       all(s2)((_, _))
     }
 
-    def startsWith[A](s: Stream[A]): Boolean = zipAll(s).takeWhile(_._2.isDefined).forall { case (h1, h2) => h1 == h2 }
+    def startsWith[B](s: Stream[B]): Boolean = zipAll(s).takeWhile(_._2.isDefined).forall { case (h1, h2) => h1 == h2 }
   }
 
   case object Empty extends Stream[Nothing]
