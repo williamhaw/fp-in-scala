@@ -25,6 +25,12 @@ package object chapter5 {
       case Cons(_, t) => t().takeWhile(p)
       case _ => empty
     }
+
+    def forall(p : A => Boolean): Boolean = this match {
+      case Cons(h, t) if p(h()) => t().forall(p)
+      case Cons(_, _) => false
+      case _ => true
+    }
   }
 
   case object Empty extends Stream[Nothing]

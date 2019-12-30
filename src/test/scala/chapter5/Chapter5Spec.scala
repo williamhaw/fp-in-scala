@@ -25,4 +25,10 @@ class Chapter5Spec extends FunSuite with Matchers {
     Stream(1, 3, 5).takeWhile(_ % 2 == 0).toList shouldEqual List.empty
     Stream[Int]().takeWhile(_ % 2 == 0).toList shouldEqual List.empty
   }
+
+  test("Stream forall") {
+    Stream(2, 4, 6, 8, 10).forall(_ % 2 == 0) shouldEqual true
+    Stream(2, 4, 6, 8, 11).forall(_ % 2 == 0) shouldEqual false
+    Stream[Int]().forall(_ % 2 == 0) shouldEqual true
+  }
 }
