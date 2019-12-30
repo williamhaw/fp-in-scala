@@ -63,8 +63,8 @@ class Chapter5Spec extends FunSuite with Matchers {
   }
 
   test("Stream flatmap") {
-    Stream(1, 2, 3).flatMap( i => Stream(i + 1, i + 2)).toList shouldEqual List(2, 3, 3, 4, 4, 5)
-    Stream[Int]().flatMap( i => Stream(i + 1, i + 2)).toList shouldEqual List.empty
+    Stream(1, 2, 3).flatMap(i => Stream(i + 1, i + 2)).toList shouldEqual List(2, 3, 3, 4, 4, 5)
+    Stream[Int]().flatMap(i => Stream(i + 1, i + 2)).toList shouldEqual List.empty
   }
 
   test("Stream constant") {
@@ -82,7 +82,7 @@ class Chapter5Spec extends FunSuite with Matchers {
   }
 
   test("Stream unfold") {
-    unfold(1)( s => Some(s, s + 1)).take(3).toList shouldEqual List(1, 2, 3)
+    unfold(1)(s => Some(s, s + 1)).take(3).toList shouldEqual List(1, 2, 3)
   }
 
   test("Stream fibsUsingUnfold") {
@@ -101,5 +101,30 @@ class Chapter5Spec extends FunSuite with Matchers {
 
   test("Stream onesUsingUnfold") {
     onesUsingUnfold.take(3).toList shouldEqual List(1, 1, 1)
+  }
+
+  test("Stream mapUsingUnfold") {
+    Stream(1, 2, 3).mapUsingUnfold(_.toString).toList shouldEqual List("1", "2", "3")
+    Stream[Int]().mapUsingUnfold(_.toString).toList shouldEqual List.empty
+  }
+
+  test("Stream takeUsingUnfold") {
+    Stream(1, 2, 3, 4).takeUsingUnfold(0).toList shouldEqual List.empty
+    Stream(1, 2, 3, 4).takeUsingUnfold(2).toList shouldEqual List(1, 2)
+    Stream(1, 2, 3, 4).takeUsingUnfold(10).toList shouldEqual List(1, 2, 3, 4)
+  }
+
+  test("Stream takeWhileUsingUnfold") {
+    Stream(1, 2, 3, 4, 5).takeWhileUsingUnfold(_ % 2 == 0).toList shouldEqual List(2, 4)
+    Stream(1, 3, 5).takeWhileUsingUnfold(_ % 2 == 0).toList shouldEqual List.empty
+    Stream[Int]().takeWhileUsingUnfold(_ % 2 == 0).toList shouldEqual List.empty
+  }
+
+  test("Stream zipWith") {
+    Stream("a", "b", "c").zipWith(Stream("a", "b"))((a, b) => a + b).toList shouldBe List("aa", "bb")
+  }
+
+  test("Stream zipAll") {
+    Stream("a", "b", "c").zipAll(Stream("a", "b")).toList shouldEqual List((Some("a"), Some("a")), (Some("b"), Some("b")), (Some("c"), None))
   }
 }
