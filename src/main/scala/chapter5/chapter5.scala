@@ -21,16 +21,24 @@ package object chapter5 {
     }
 
     def takeWhile(p: A => Boolean): Stream[A] = this match {
-      case Cons(h, t) if(p(h())) => cons[A](h(), t().takeWhile(p))
+      case Cons(h, t) if (p(h())) => cons[A](h(), t().takeWhile(p))
       case Cons(_, t) => t().takeWhile(p)
       case _ => empty
     }
 
-    def forall(p : A => Boolean): Boolean = this match {
+    def forall(p: A => Boolean): Boolean = this match {
       case Cons(h, t) if p(h()) => t().forall(p)
       case Cons(_, _) => false
       case _ => true
     }
+
+    def foldRight[B](z: => B)(f: (A, => B) => B): B =
+      this match {
+        case Cons(h, t) => f(h(), t().foldRight(z)(f))
+        case _ => z
+      }
+
+    def takeWhileWithFoldRight(p: A => Boolean): Stream[A] = foldRight(empty[A])((a, b) => if (p(a)) cons[A](a, b) else b)
   }
 
   case object Empty extends Stream[Nothing]
