@@ -66,4 +66,9 @@ class Chapter5Spec extends FunSuite with Matchers {
     Stream(1, 2, 3).flatMap( i => Stream(i + 1, i + 2)).toList shouldEqual List(2, 3, 3, 4, 4, 5)
     Stream[Int]().flatMap( i => Stream(i + 1, i + 2)).toList shouldEqual List.empty
   }
+
+  test("Stream constant") {
+    constant(1).take(3).toList shouldEqual List(1, 1, 1)
+    constant("hello").take(3).toList shouldEqual List("hello", "hello", "hello")
+  }
 }
