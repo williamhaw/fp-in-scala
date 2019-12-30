@@ -88,4 +88,12 @@ package object chapter5 {
     case Some((h, s)) => cons(h, unfold(s)(f))
     case None => empty
   }
+
+  def fibsUsingUnfold: Stream[Int] = unfold((0, 1)){ case (a, b) => Some((a, (b, a + b)))}
+
+  def fromUsingUnfold(n: Int): Stream[Int] = unfold(n)(a => Some(a, a + 1))
+
+  def constantUsingUnfold[A](a: A): Stream[A] = unfold(a)(aa => Some(aa, aa))
+
+  def onesUsingUnfold: Stream[Int] = unfold(1)(_ => Some(1, 1))
 }

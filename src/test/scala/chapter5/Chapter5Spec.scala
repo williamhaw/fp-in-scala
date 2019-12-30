@@ -84,4 +84,22 @@ class Chapter5Spec extends FunSuite with Matchers {
   test("Stream unfold") {
     unfold(1)( s => Some(s, s + 1)).take(3).toList shouldEqual List(1, 2, 3)
   }
+
+  test("Stream fibsUsingUnfold") {
+    fibsUsingUnfold.take(7).toList shouldEqual List(0, 1, 1, 2, 3, 5, 8)
+  }
+
+  test("Stream fromUsingUnfold") {
+    fromUsingUnfold(1).take(3).toList shouldEqual List(1, 2, 3)
+    fromUsingUnfold(17).take(3).toList shouldEqual List(17, 18, 19)
+  }
+
+  test("Stream constantUsingUnfold") {
+    constantUsingUnfold(1).take(3).toList shouldEqual List(1, 1, 1)
+    constantUsingUnfold("hello").take(3).toList shouldEqual List("hello", "hello", "hello")
+  }
+
+  test("Stream onesUsingUnfold") {
+    onesUsingUnfold.take(3).toList shouldEqual List(1, 1, 1)
+  }
 }
