@@ -71,4 +71,9 @@ class Chapter5Spec extends FunSuite with Matchers {
     constant(1).take(3).toList shouldEqual List(1, 1, 1)
     constant("hello").take(3).toList shouldEqual List("hello", "hello", "hello")
   }
+
+  test("Stream from") {
+    from(1).take(3).toList shouldEqual List(1, 2, 3)
+    from(17).take(3).toList shouldEqual List(17, 18, 19)
+  }
 }
