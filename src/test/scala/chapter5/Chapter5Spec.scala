@@ -80,4 +80,8 @@ class Chapter5Spec extends FunSuite with Matchers {
   test("Stream fibs") {
     fibs.take(7).toList shouldEqual List(0, 1, 1, 2, 3, 5, 8)
   }
+
+  test("Stream unfold") {
+    unfold(1)( s => Some(s, s + 1)).take(3).toList shouldEqual List(1, 2, 3)
+  }
 }

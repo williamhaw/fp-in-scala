@@ -76,11 +76,16 @@ package object chapter5 {
 
   def constant[A](a: A): Stream[A] = cons(a, constant(a))
 
-  def from(n : Int): Stream[Int] = cons(n, from(n + 1))
+  def from(n: Int): Stream[Int] = cons(n, from(n + 1))
 
   def fibs: Stream[Int] = {
     def loop(a: Int, b: Int): Stream[Int] = cons(a, loop(b, a + b))
+
     loop(0, 1)
   }
 
+  def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] = f(z) match {
+    case Some((h, s)) => cons(h, unfold(s)(f))
+    case None => empty
+  }
 }
