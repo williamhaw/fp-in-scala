@@ -39,10 +39,10 @@ package object chapter5 {
       }
 
     def takeWhileWithFoldRight(p: A => Boolean): Stream[A] =
-      foldRight(empty[A])((a, b) => if (p(a)) cons[A](a, b) else b)
+      foldRight(empty[A])((h, t) => if (p(h)) cons[A](h, t) else t)
 
     def headOptionWithFoldRight: Option[A] =
-      foldRight[Option[A]](None)((a, _) => Some(a))
+      foldRight[Option[A]](None)((h, _) => Some(h))
 
     def map[B](f: A => B): Stream[B] =
       foldRight(empty[B])((h, t) => cons(f(h), t))
