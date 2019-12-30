@@ -43,4 +43,27 @@ class Chapter5Spec extends FunSuite with Matchers {
     Stream(1).headOptionWithFoldRight shouldEqual Some(1)
     Stream[Int]().headOptionWithFoldRight shouldEqual None
   }
+
+  test("Stream map") {
+    Stream(1, 2, 3).map(_.toString).toList shouldEqual List("1", "2", "3")
+    Stream[Int]().map(_.toString).toList shouldEqual List.empty
+  }
+
+  test("Stream filter") {
+    Stream(1, 2, 3, 4).filter(_ % 2 == 0).toList shouldEqual List(2, 4)
+    Stream(2, 4).filter(_ % 2 == 0).toList shouldEqual List(2, 4)
+    Stream(1, 3).filter(_ % 2 == 0).toList shouldEqual List.empty
+    Stream[Int]().filter(_ % 2 == 0).toList shouldEqual List.empty
+  }
+
+  test("Stream append") {
+    Stream(1).append(Stream(2)).toList shouldEqual List(1, 2)
+    Stream[Int]().append(Stream(1)).toList shouldEqual List(1)
+    Stream(1).append(Stream[Int]()).toList shouldEqual List(1)
+  }
+
+  test("Stream flatmap") {
+    Stream(1, 2, 3).flatMap( i => Stream(i + 1, i + 2)).toList shouldEqual List(2, 3, 3, 4, 4, 5)
+    Stream[Int]().flatMap( i => Stream(i + 1, i + 2)).toList shouldEqual List.empty
+  }
 }
