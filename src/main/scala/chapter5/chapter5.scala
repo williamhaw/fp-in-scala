@@ -78,4 +78,9 @@ package object chapter5 {
 
   def from(n : Int): Stream[Int] = cons(n, from(n + 1))
 
+  def fibs: Stream[Int] = {
+    def loop(a: Int, b: Int): Stream[Int] = cons(a, loop(b, a + b))
+    loop(0, 1)
+  }
+
 }

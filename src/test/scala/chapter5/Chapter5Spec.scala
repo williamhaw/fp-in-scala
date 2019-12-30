@@ -76,4 +76,8 @@ class Chapter5Spec extends FunSuite with Matchers {
     from(1).take(3).toList shouldEqual List(1, 2, 3)
     from(17).take(3).toList shouldEqual List(17, 18, 19)
   }
+
+  test("Stream fibs") {
+    fibs.take(7).toList shouldEqual List(0, 1, 1, 2, 3, 5, 8)
+  }
 }
