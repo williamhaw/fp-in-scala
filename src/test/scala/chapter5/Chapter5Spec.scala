@@ -37,4 +37,10 @@ class Chapter5Spec extends FunSuite with Matchers {
     Stream(1, 3, 5).takeWhileWithFoldRight(_ % 2 == 0).toList shouldEqual List.empty
     Stream[Int]().takeWhileWithFoldRight(_ % 2 == 0).toList shouldEqual List.empty
   }
+
+
+  test("Stream headOptionWithFoldRight") {
+    Stream(1).headOptionWithFoldRight shouldEqual Some(1)
+    Stream[Int]().headOptionWithFoldRight shouldEqual None
+  }
 }

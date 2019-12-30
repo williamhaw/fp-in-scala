@@ -38,7 +38,11 @@ package object chapter5 {
         case _ => z
       }
 
-    def takeWhileWithFoldRight(p: A => Boolean): Stream[A] = foldRight(empty[A])((a, b) => if (p(a)) cons[A](a, b) else b)
+    def takeWhileWithFoldRight(p: A => Boolean): Stream[A] =
+      foldRight(empty[A])((a, b) => if (p(a)) cons[A](a, b) else b)
+
+    def headOptionWithFoldRight: Option[A] =
+      foldRight[Option[A]](None)((a, _) => Some(a))
   }
 
   case object Empty extends Stream[Nothing]
