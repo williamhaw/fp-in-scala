@@ -127,4 +127,12 @@ class Chapter5Spec extends FunSuite with Matchers {
   test("Stream zipAll") {
     Stream("a", "b", "c").zipAll(Stream("a", "b")).toList shouldEqual List((Some("a"), Some("a")), (Some("b"), Some("b")), (Some("c"), None))
   }
+
+  test("Stream startswith") {
+    Stream("a", "b", "c").startsWith(Stream("a", "b")) shouldEqual true
+    Stream("a", "b", "c").startsWith(Stream("aa")) shouldEqual false
+    Stream("a", "b", "c").startsWith(Stream("a", "bb")) shouldEqual false
+    Stream(1, 2, 3).startsWith(Stream(1, 2)) shouldEqual true
+    Stream().startsWith(Stream()) shouldEqual true
+  }
 }
