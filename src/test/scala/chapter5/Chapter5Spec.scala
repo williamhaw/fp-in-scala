@@ -140,4 +140,8 @@ class Chapter5Spec extends FunSuite with Matchers {
     Stream(1, 2, 3).tails.toList.map(_.toList) shouldEqual List(List(1, 2, 3), List(2, 3), List(3))
     Stream("a", "b", "c").tails.toList.map(_.toList) shouldEqual List(List("a", "b", "c"), List("b", "c"), List("c"))
   }
+
+  test("Stream scanRight") {
+    Stream(1,2,3).scanRight(0)(_ + _).toList shouldEqual List(6, 5, 3, 0)
+  }
 }

@@ -95,6 +95,12 @@ package object chapter5 {
       case Cons(h, t) => Some((cons(h(), t()), t()))
       case Empty => None
     }
+
+    def scanRight[B](z: => B)(f: (A, => B) => B): Stream[B] = foldRight((z, Stream(z)))({ (h, t) =>
+      lazy val t1 = t
+      val next = f(h, t1._1)
+      (next, cons(next, t1._2))
+    })._2
   }
 
   case object Empty extends Stream[Nothing]
