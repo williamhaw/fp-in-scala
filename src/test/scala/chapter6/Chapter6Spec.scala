@@ -70,4 +70,18 @@ class Chapter6Spec extends FunSuite with Matchers {
     nonNegativeLessThan(5)(rng)._1 < 5
     nonNegativeLessThan(5)(rng)._1 > 0
   }
+
+  test("RNG mapWithFlatMap") {
+    val rng = SimpleRNG(42)
+    val firstR = int(rng)
+    mapWithFlatMap(int)(_ + 1)(rng)._1 shouldEqual firstR._1 + 1
+  }
+
+  test("RNG map2WithFlatMap") {
+    val rng = SimpleRNG(42)
+    val firstR = int(rng)
+    val secondR = int(int(rng)._2)
+    val (result, _) = map2WithFlatMap(int, int)(_ + _)(rng)
+    result shouldEqual firstR._1 + secondR._1
+  }
 }
