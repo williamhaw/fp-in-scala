@@ -96,6 +96,7 @@ package object chapter5 {
       case Empty => None
     }
 
+    // unfold cannot be used to implement scanRight as it generates the elements of the stream from left to right.
     def scanRight[B](z: => B)(f: (A, => B) => B): Stream[B] = foldRight((z, Stream(z)))({ (h, t) =>
       lazy val t1 = t
       val next = f(h, t1._1)
