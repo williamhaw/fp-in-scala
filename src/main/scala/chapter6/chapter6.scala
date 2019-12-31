@@ -72,4 +72,12 @@ package object chapter6 {
 
   //Exercise 6.5
   def doubleUsingMap: Rand[Double] = map(nonNegativeInt)(i => i / (Int.MaxValue.toDouble + 1))
+
+  //Exercise 6.6
+  def map2[A, B, C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] =
+    rng => {
+      val (a, rngA) = ra(rng)
+      val (b, rngB) = rb(rngA)
+      (f(a, b), rngB)
+    }
 }
