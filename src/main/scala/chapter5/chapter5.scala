@@ -3,11 +3,13 @@ import chapter5.Stream._
 package object chapter5 {
 
   sealed trait Stream[+A] {
+    //Exercise 5.1
     def toList: List[A] = this match {
       case Cons(h, t) => h() :: t().toList
       case Empty => List()
     }
 
+    //Exercise 5.2
     def take(n: Int): Stream[A] = this match {
       case Cons(h, t) if n > 0 => cons[A](h(), t().take(n - 1))
       case Cons(_, _) if n <= 0 => empty
@@ -20,12 +22,14 @@ package object chapter5 {
       case _ => empty
     }
 
+    //Exercise 5.3
     def takeWhile(p: A => Boolean): Stream[A] = this match {
       case Cons(h, t) if (p(h())) => cons[A](h(), t().takeWhile(p))
       case Cons(_, t) => t().takeWhile(p)
       case _ => empty
     }
 
+    //Exercise 5.4
     def forall(p: A => Boolean): Boolean = this match {
       case Cons(h, t) if p(h()) => t().forall(p)
       case Cons(_, _) => false
@@ -38,12 +42,15 @@ package object chapter5 {
         case _ => z
       }
 
+    //Exercise 5.5
     def takeWhileWithFoldRight(p: A => Boolean): Stream[A] =
       foldRight(empty[A])((h, t) => if (p(h)) cons[A](h, t) else t)
 
+    //Exercise 5.6
     def headOptionWithFoldRight: Option[A] =
       foldRight[Option[A]](None)((h, _) => Some(h))
 
+    //Exercise 5.7
     def map[B](f: A => B): Stream[B] =
       foldRight(empty[B])((h, t) => cons(f(h), t))
 
@@ -56,6 +63,7 @@ package object chapter5 {
     def flatMap[B](f: A => Stream[B]): Stream[B] =
       foldRight(empty[B])((h, t) => f(h).append(t))
 
+    //Exercise 5.13
     def mapUsingUnfold[B](f: A => B): Stream[B] = unfold(this) {
       case Cons(h, t) => Some((f(h()), t()))
       case _ => None
@@ -89,13 +97,16 @@ package object chapter5 {
       all(s2)((_, _))
     }
 
+    //Exercise 5.14
     def startsWith[B](s: Stream[B]): Boolean = zipAll(s).takeWhile(_._2.isDefined).forall { case (h1, h2) => h1 == h2 }
 
+    //Exercise 5.15
     def tails: Stream[Stream[A]] = unfold(this) {
       case Cons(h, t) => Some((cons(h(), t()), t()))
       case Empty => None
     }
 
+    //Exercise 5.16
     // unfold cannot be used to implement scanRight as it generates the elements of the stream from left to right.
     def scanRight[B](z: => B)(f: (A, => B) => B): Stream[B] = foldRight((z, Stream(z)))({ (h, t) =>
       lazy val t1 = t
@@ -121,21 +132,26 @@ package object chapter5 {
       if (as.isEmpty) empty else cons(as.head, apply(as.tail: _*))
   }
 
+  //Exercise 5.8
   def constant[A](a: A): Stream[A] = cons(a, constant(a))
 
+  //Exercise 5.9
   def from(n: Int): Stream[Int] = cons(n, from(n + 1))
 
+  //Exercise 5.10
   def fibs: Stream[Int] = {
     def loop(a: Int, b: Int): Stream[Int] = cons(a, loop(b, a + b))
 
     loop(0, 1)
   }
 
+  //Exercise 5.11
   def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] = f(z) match {
     case Some((h, s)) => cons(h, unfold(s)(f))
     case None => empty
   }
 
+  //Exercise 5.12
   def fibsUsingUnfold: Stream[Int] = unfold((0, 1)) { case (a, b) => Some((a, (b, a + b))) }
 
   def fromUsingUnfold(n: Int): Stream[Int] = unfold(n)(a => Some(a, a + 1))
