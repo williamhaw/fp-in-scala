@@ -22,4 +22,9 @@ package object chapter6 {
       (-(nextInt + 1), nextRng)
   }
 
+  //Exercise 6.2
+  def double(rng: RNG): (Double, RNG) = {
+    val (nextInt, nextRng) = nonNegativeInt(rng)
+    (nextInt / (Int.MaxValue.toDouble + 1), nextRng)
+  }
 }

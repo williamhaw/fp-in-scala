@@ -14,4 +14,16 @@ class Chapter6Spec extends FunSuite with Matchers {
     result1 should not be result2
   }
 
+  test("RNG double") {
+    val rng = SimpleRNG(47)
+    val (double1, rng1) = double(rng)
+    val double2 = double(rng1)._1
+
+    double1.toInt should be >= 0
+    double1.toInt should be < 1
+    double2.toInt should be >= 0
+    double2.toInt should be < 1
+    double1 should not be double2
+  }
+
 }
