@@ -45,4 +45,12 @@ class Chapter6Spec extends FunSuite with Matchers {
     val (result, _) = map2(int, int)(_ + _)(rng)
     result shouldEqual firstR._1 + secondR._1
   }
+
+  test("RNG sequence") {
+    val rng = SimpleRNG(42)
+    val firstR = int(rng)
+    val secondR = int(int(rng)._2)
+    val (result, _) = sequence(List(int, int))(rng)
+    result shouldEqual List(firstR._1, secondR._1)
+  }
 }

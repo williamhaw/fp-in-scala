@@ -80,4 +80,8 @@ package object chapter6 {
       val (b, rngB) = rb(rngA)
       (f(a, b), rngB)
     }
+
+  //Exercise 6.7
+  def sequence[A](fs: List[Rand[A]]): Rand[List[A]] =
+    fs.foldRight(unit(List[A]()))((head, tail) => map2(head, tail) { case (h, t) => h :: t })
 }
