@@ -26,4 +26,16 @@ class Chapter6Spec extends FunSuite with Matchers {
     double1 should not be double2
   }
 
+  test("RNG doubleUsingMap") {
+    val rng = SimpleRNG(42)
+    val (double1, nextRng) = doubleUsingMap(rng)
+    val double2 = doubleUsingMap(nextRng)._1
+
+    double1.toInt should be >= 0
+    double1.toInt should be < 1
+    double2.toInt should be >= 0
+    double2.toInt should be < 1
+    double1 should not be double2
+  }
+
 }
