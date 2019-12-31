@@ -27,4 +27,34 @@ package object chapter6 {
     val (nextInt, nextRng) = nonNegativeInt(rng)
     (nextInt / (Int.MaxValue.toDouble + 1), nextRng)
   }
+
+  //Exercise 6.3
+  def intDouble(rng: RNG): ((Int, Double), RNG) = {
+    val (nextInt, nextRng) = rng.nextInt
+    val (nextDouble, finalRng) = double(nextRng)
+    ((nextInt, nextDouble), finalRng)
+  }
+
+  def doubleInt(rng: RNG): ((Double, Int), RNG) = {
+    val (nextDouble, nextRng) = double(rng)
+    val (nextInt, finalRng) = nextRng.nextInt
+    ((nextDouble, nextInt), finalRng)
+  }
+
+  def double3(rng: RNG): ((Double, Double, Double), RNG) = {
+    val (nextDouble1, nextRng) = double(rng)
+    val (nextDouble2, nextNextRng) = double(nextRng)
+    val (nextDouble3, finalRng) = double(nextNextRng)
+    ((nextDouble1, nextDouble2, nextDouble3), finalRng)
+  }
+
+  //Exercise 6.4
+  def ints(count: Int)(rng: RNG): (List[Int], RNG) =
+    if (count == 0) {
+      (List.empty, rng)
+    } else {
+      val (nextInt, nextRng) = rng.nextInt
+      val (tail, nextNextRng) = ints(count - 1)(nextRng)
+      (nextInt :: tail, nextNextRng)
+    }
 }

@@ -15,7 +15,7 @@ class Chapter6Spec extends FunSuite with Matchers {
   }
 
   test("RNG double") {
-    val rng = SimpleRNG(47)
+    val rng = SimpleRNG(42)
     val (double1, rng1) = double(rng)
     val double2 = double(rng1)._1
 
