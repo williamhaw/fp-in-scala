@@ -53,4 +53,21 @@ class Chapter6Spec extends FunSuite with Matchers {
     val (result, _) = sequence(List(int, int))(rng)
     result shouldEqual List(firstR._1, secondR._1)
   }
+
+  test("RNG flatmap") {
+    val rng = SimpleRNG(42)
+    val expected = double(int(rng)._2)
+    val (_, rng2) = int(rng)
+    val expected2 = int(int(rng)._2)
+    //value of first random number is positive
+    flatMap(int)(i => if (i < 0) unit(i) else double)(rng) shouldEqual expected
+    //value of first random number is negative
+    flatMap(int)(i => if (i < 0) unit(i) else double)(rng2) shouldEqual expected2
+  }
+
+  test("RNG nonNegativeLessThan") {
+    val rng = SimpleRNG(42)
+    nonNegativeLessThan(5)(rng)._1 < 5
+    nonNegativeLessThan(5)(rng)._1 > 0
+  }
 }
