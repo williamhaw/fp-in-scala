@@ -25,7 +25,6 @@ package object chapter5 {
     //Exercise 5.3
     def takeWhile(p: A => Boolean): Stream[A] = this match {
       case Cons(h, t) if (p(h())) => cons[A](h(), t().takeWhile(p))
-      case Cons(_, t) => t().takeWhile(p)
       case _ => empty
     }
 
@@ -44,7 +43,7 @@ package object chapter5 {
 
     //Exercise 5.5
     def takeWhileWithFoldRight(p: A => Boolean): Stream[A] =
-      foldRight(empty[A])((h, t) => if (p(h)) cons[A](h, t) else t)
+      foldRight(empty[A])((h, t) => if (p(h)) cons[A](h, t) else empty)
 
     //Exercise 5.6
     def headOptionWithFoldRight: Option[A] =
@@ -77,7 +76,6 @@ package object chapter5 {
 
     def takeWhileUsingUnfold(p: A => Boolean): Stream[A] = unfold(this) {
       case Cons(h, t) if p(h()) => Some(h(), t())
-      case Cons(_, t) => t().headOptionWithFoldRight.filter(p).map(at => (at, t().drop(1).takeWhileUsingUnfold(p)))
       case _ => None
     }
 

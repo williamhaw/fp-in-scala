@@ -21,7 +21,8 @@ class Chapter5Spec extends FunSuite with Matchers {
   }
 
   test("Stream takeWhile") {
-    Stream(1, 2, 3, 4, 5).takeWhile(_ % 2 == 0).toList shouldEqual List(2, 4)
+    Stream(2, 3, 4, 5).takeWhile(_ % 2 == 0).toList shouldEqual List(2)
+    Stream(2, 4, 5).takeWhile(_ % 2 == 0).toList shouldEqual List(2, 4)
     Stream(1, 3, 5).takeWhile(_ % 2 == 0).toList shouldEqual List.empty
     Stream[Int]().takeWhile(_ % 2 == 0).toList shouldEqual List.empty
   }
@@ -33,7 +34,8 @@ class Chapter5Spec extends FunSuite with Matchers {
   }
 
   test("Stream takeWhileWithFoldRight") {
-    Stream(1, 2, 3, 4, 5).takeWhileWithFoldRight(_ % 2 == 0).toList shouldEqual List(2, 4)
+    Stream(2, 3, 4, 5).takeWhileWithFoldRight(_ % 2 == 0).toList shouldEqual List(2)
+    Stream(2, 4, 5).takeWhileWithFoldRight(_ % 2 == 0).toList shouldEqual List(2, 4)
     Stream(1, 3, 5).takeWhileWithFoldRight(_ % 2 == 0).toList shouldEqual List.empty
     Stream[Int]().takeWhileWithFoldRight(_ % 2 == 0).toList shouldEqual List.empty
   }
@@ -115,7 +117,8 @@ class Chapter5Spec extends FunSuite with Matchers {
   }
 
   test("Stream takeWhileUsingUnfold") {
-    Stream(1, 2, 3, 4, 5).takeWhileUsingUnfold(_ % 2 == 0).toList shouldEqual List(2, 4)
+    Stream(2, 3, 4, 5).takeWhileUsingUnfold(_ % 2 == 0).toList shouldEqual List(2)
+    Stream(2, 4, 5).takeWhileUsingUnfold(_ % 2 == 0).toList shouldEqual List(2, 4)
     Stream(1, 3, 5).takeWhileUsingUnfold(_ % 2 == 0).toList shouldEqual List.empty
     Stream[Int]().takeWhileUsingUnfold(_ % 2 == 0).toList shouldEqual List.empty
   }
