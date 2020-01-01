@@ -84,4 +84,24 @@ class Chapter6Spec extends FunSuite with Matchers {
     val (result, _) = map2WithFlatMap(int, int)(_ + _)(rng)
     result shouldEqual firstR._1 + secondR._1
   }
+
+  sealed trait DoorState
+  case object Open extends DoorState
+  case object Closed extends DoorState
+
+  case class Door(state: DoorState)
+
+  test("State unit") {
+    State.unit[Door, DoorState](Open).run(Door(Closed)) shouldEqual (Open, Door(Closed))
+  }
+
+  test("State map") {
+    //if door is open, close it and return closed door
+    //else open the door and return open door
+    val initialState = State[Door, DoorState](d => if(d.state == Open) (Closed, Door(Closed)) else (Open, Door(Open)))
+    //door open initially, after transition will be closed and mapped to 0
+    initialState.map(ds => if(ds == Open) 1 else 0).run(Door(Open)) shouldEqual (0, Door(Closed))
+    //door closed initially, after transition will be open and mapped to 1
+    initialState.map(ds => if(ds == Open) 1 else 0).run(Door(Closed)) shouldEqual (1, Door(Open))
+  }
 }
