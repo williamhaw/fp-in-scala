@@ -152,6 +152,15 @@ package object chapter3 {
     case Branch(l, r) => g(treeFold(l)(f)(g), treeFold(r)(f)(g))
   }
 
+  def treeSizeUsingFold[A](tree: Tree[A]): Int =
+    treeFold(tree)(_ => 1)((sizeLeft, sizeRight) => sizeLeft + sizeRight + 1)
+
+  def treeMaxUsingFold[A](tree: Tree[Int]): Int =
+    treeFold(tree)(e => e)((maxLeft, maxRight) => max(maxLeft, maxRight))
+
+  def treeDepthUsingFold[A](tree: Tree[A]): Int =
+    treeFold(tree)(_ => 1)((depthLeft, depthRight) => 1 + max(depthLeft, depthRight))
+
   def treeMapUsingFold[A, B](tree: Tree[A])(f: A => B): Tree[B] =
-    treeFold(tree)(v => Leaf(f(v)): Tree[B])(Branch(_, _))
+    treeFold(tree)(v => Leaf(f(v)): Tree[B])((mapLeft, mapRight) => Branch(mapLeft, mapRight))
 }

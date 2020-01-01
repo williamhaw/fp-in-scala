@@ -139,7 +139,23 @@ class Chapter3Spec extends FunSuite with Matchers{
     treeFold(Branch(Leaf(1), Branch(Leaf(2), Leaf(3))))(_ => 1)((d1, d2) => 1 + max(d1, d2)) shouldBe 3
     treeFold(Branch(Leaf(1), Leaf(2)))(_ => 1)((d1, d2) => 1 + max(d1, d2)) shouldBe 2
     treeFold(Leaf(1))(_ => 1)((d1, d2) => 1 + max(d1, d2)) shouldBe 1
-    //map
+  }
+
+  test("treeSizeUsingFold") {
+    treeSizeUsingFold(Branch(Leaf(1), Branch(Leaf(2), Leaf(3)))) shouldBe 5
+  }
+
+  test("treeMaxUsingFold") {
+    treeMaxUsingFold(Branch(Leaf(1), Branch(Leaf(2), Leaf(3)))) shouldBe 3
+  }
+
+  test("treeDepthUsingFold") {
+    treeDepthUsingFold(Branch(Leaf(1), Branch(Leaf(2), Leaf(3)))) shouldBe 3
+    treeDepthUsingFold(Branch(Leaf(1), Leaf(2))) shouldBe 2
+    treeDepthUsingFold(Leaf(1)) shouldBe 1
+  }
+
+  test("treeMapUsingFold") {
     treeMapUsingFold(Branch(Leaf(1), Branch(Leaf(2), Leaf(3))))(_ + 1) shouldBe Branch(Leaf(2), Branch(Leaf(3), Leaf(4)))
     treeMapUsingFold(Branch(Leaf(1), Branch(Leaf(2), Leaf(3))))(_.toString) shouldBe Branch(Leaf("1"), Branch(Leaf("2"), Leaf("3")))
   }
