@@ -154,4 +154,25 @@ class Chapter6Spec extends FunSuite with Matchers {
     State.sequence(List(initialState, initialState2)).run(Door(Open)) shouldEqual(List(Closed, Closed), Door(Closed))
     State.sequence(List(initialState, initialState2)).run(Door(Closed)) shouldEqual(List(Open, Open), Door(Open))
   }
+
+  test("Machine updateMachine") {
+    updateMachine(Turn, Machine(true, 0, 1)) shouldEqual Machine(true, 0, 1)
+    updateMachine(Coin, Machine(true, 1, 1)) shouldEqual Machine(false, 1, 2)
+    updateMachine(Turn, Machine(false, 1, 1)) shouldEqual Machine(true, 0, 1)
+    updateMachine(Coin, Machine(false, 1, 1)) shouldEqual Machine(false, 1, 1)
+    updateMachine(Turn, Machine(true, 1, 1)) shouldEqual Machine(true, 1, 1)
+  }
+
+  test("Machine simulateMachine") {
+    val machine1 = Machine(true, 1, 0)
+    val inputs1 = List(Coin, Turn)
+    simulateMachine(inputs1).run(machine1)._2 shouldEqual Machine(true, 0, 1)
+
+    val machine2 = Machine(true, 10, 4)
+    val inputs2 = List(Turn)
+    simulateMachine(inputs2).run(machine2)._2 shouldEqual machine2
+
+    val inputs3 = List(Turn, Coin, Turn)
+    simulateMachine(inputs3).run(machine2)._2 shouldEqual Machine(true, 9, 5)
+  }
 }

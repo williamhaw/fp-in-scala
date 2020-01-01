@@ -130,4 +130,40 @@ package object chapter6 {
       fs.foldRight(unit[S, List[A]](List[A]()))((head, tail) => head.map2(tail) { case (h, t) => h :: t })
   }
 
+  def get[S]: State[S, S] = State(s => (s, s))
+
+  def set[S](s: S): State[S, Unit] = State(_ => ((), s))
+
+  def modify[S](f: S => S): State[S, Unit] = for {
+    s <- get
+    _ <- set(f(s))
+  } yield ()
+
+  sealed trait Input
+
+  case object Coin extends Input
+
+  case object Turn extends Input
+
+  case class Machine(locked: Boolean, candies: Int, coins: Int)
+
+  //Exercise 6.11
+  def simulateMachine(inputs: List[Input]): State[Machine, (Int, Int)] =
+    for {
+      _ <- State.sequence(inputs.map(input => modify[Machine](m => updateMachine(input, m))))
+      s <- get
+    } yield (s.coins, s.candies)
+
+  def updateMachine(input: Input, machine: Machine): Machine = (input, machine) match {
+    //A machine that is out of candy ignores all inputs.
+    case (_, Machine(_, 0, _)) => machine
+    //Inserting a coin into a locked machine will cause it to unlock if there is any candy left.
+    case (Coin, Machine(true, candies, coins)) => Machine(locked = false, candies, coins + 1)
+    //Turning the knob on an unlocked machine will cause it to dispense candy and become locked.
+    case (Turn, Machine(false, candies, coins)) => Machine(locked = true, candies - 1, coins)
+    //Turning the knob on a locked machine or inserting a coin into an unlocked machine does nothing.
+    case (Turn, Machine(true, _, _)) => machine
+    case (Coin, Machine(false, _, _)) => machine
+  }
+
 }
