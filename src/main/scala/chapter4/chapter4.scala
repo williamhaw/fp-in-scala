@@ -1,6 +1,7 @@
 package object chapter4 {
 
   sealed trait Option[+A] {
+    //Exercise 4.1
     def map[B](f: A => B): Option[B] = this match {
       case None => None
       case Some(v) => Some(f(v))
@@ -25,27 +26,32 @@ package object chapter4 {
 
   case object None extends Option[Nothing]
 
+  //Exercise 4.2
   def variance(xs: Seq[Double]): Option[Double] = {
     def mean(l: Seq[Double]): Option[Double] = if (l.isEmpty) None else Some(l.sum / l.length)
 
     mean(xs).flatMap(m => mean(xs.map(x => math.pow(x - m, 2))))
   }
 
+  //Exercise 4.3
   def map2[A, B, C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] = a.flatMap(aRaw => b.map(bRaw => f(aRaw, bRaw)))
 
+  //Exercise 4.4
   def sequence[A](a: List[Option[A]]): Option[List[A]] = a match {
     case Nil => Some(Nil)
     case h :: t => h.flatMap(hRaw => sequence(t).map(rawList => hRaw :: rawList))
   }
 
+  //Exercise 4.5
   def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] = a match {
     case Nil => Some(Nil)
     case h :: t => map2(f(h), traverse(t)(f))(_ :: _)
   }
 
-  def sequence2[A](a: List[Option[A]]): Option[List[A]] = traverse(a)(x => x)
+  def sequenceUsingTraverse[A](a: List[Option[A]]): Option[List[A]] = traverse(a)(x => x)
 
   sealed trait Either[+E, +A] {
+    //Exercise 4.6
     def map[B](f: A => B): Either[E, B] = this match {
       case Left(e) => Left(e)
       case Right(v) => Right(f(v))
@@ -73,6 +79,7 @@ package object chapter4 {
 
   case class Right[+A](value: A) extends Either[Nothing, A]
 
+  //Exercise 4.7
   def sequenceEither[E, A](es: List[Either[E, A]]): Either[E, List[A]] = traverseEither(es)(x => x)
 
   def traverseEither[E, A, B](as: List[A])(f: A => Either[E, B]): Either[E, List[B]] = as match {

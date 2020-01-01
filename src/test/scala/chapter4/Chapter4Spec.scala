@@ -66,11 +66,11 @@ class Chapter4Spec extends FunSuite with Matchers {
   }
 
   test("Option sequence2") {
-    sequence2(List(Some(1), Some(2), Some(3))) shouldEqual Some(List(1, 2, 3))
-    sequence2(List()) shouldEqual Some(List())
-    sequence2(List(Some(1), None)) shouldEqual None
-    sequence2(List(None, Some(1))) shouldEqual None
-    sequence2(List(None)) shouldEqual None
+    sequenceUsingTraverse(List(Some(1), Some(2), Some(3))) shouldEqual Some(List(1, 2, 3))
+    sequenceUsingTraverse(List()) shouldEqual Some(List())
+    sequenceUsingTraverse(List(Some(1), None)) shouldEqual None
+    sequenceUsingTraverse(List(None, Some(1))) shouldEqual None
+    sequenceUsingTraverse(List(None)) shouldEqual None
   }
 
   test("Either map") {
