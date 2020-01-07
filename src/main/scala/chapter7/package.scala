@@ -18,17 +18,17 @@ package object chapter7 {
     def unit[A](a: A): Par[A] = (es: ExecutorService) => UnitFuture(a)
 
     def fork[A](a: Par[A]): Par[A] = es => es.submit(new Callable[A] {
-      def call = a(es).get
+      def call: A = a(es).get
     })
 
     def lazyUnit[A](a: => A): Par[A] = fork(unit(a))
 
-//    def run[A](a: Par[A]): A = a
+    def run[A](s: ExecutorService)(a: Par[A]): Future[A] = a(s)
 
     private case class UnitFuture[A](get: A) extends Future[A] {
       def isDone = true
 
-      def get(timeout: Long, units: TimeUnit) = get
+      def get(timeout: Long, units: TimeUnit): A = get
 
       def isCancelled = false
 
