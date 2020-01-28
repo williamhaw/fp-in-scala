@@ -35,6 +35,9 @@ package object chapter7 {
       def cancel(evenIfRunning: Boolean): Boolean = false
     }
 
+    //Exercise 7.4
+    def asyncF[A, B](f: A => B): A => Par[B] = a => lazyUnit(f(a))
+
   }
 
 }
